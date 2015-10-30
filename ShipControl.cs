@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ShipControl : MonoBehaviour {
 	
-	public float speed;
     public float rotationSpeed;
+    public float absoluteSpeed;
+    public Scrollbar SpeedScrollbar; 
 
 	private Rigidbody rb;
 	
@@ -15,15 +17,13 @@ public class ShipControl : MonoBehaviour {
 	
 	void FixedUpdate ()
 	{
-		float moveHorizontal = Input.GetAxis ("Horizontal");
-		float moveVertical = Input.GetAxis ("Vertical");
-		
-		Vector3 movement = new Vector3 (0, 0, moveVertical);
-        Vector3 Rotation = new Vector3 (0, moveHorizontal, 0);
+        float moveHorizontal = Input.GetAxis("Horizontal");
 
-		rb.AddRelativeForce (movement * speed);
+        Vector3 Rotation = new Vector3(0, moveHorizontal, 0);
+
+        transform.Translate(new Vector3(0, 0, 1) * Time.deltaTime * absoluteSpeed * SpeedScrollbar.value);
         rb.AddRelativeTorque(Rotation * rotationSpeed);
-	}
+    }
 	
 
 }
